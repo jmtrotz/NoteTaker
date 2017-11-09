@@ -16,12 +16,11 @@ import javax.swing.JLabel;
 
 /**
  * Welcome window for the note taker
- *
  * @author: Jeffrey Trotz
  * @version: 0.1
  */
-public class NoteTaker extends JFrame {
-
+public class NoteTaker extends JFrame 
+{
     // Declare and set properties for attributes used in this class
     private final String logo = "images/logo.png";
     private final JButton viewNotes = new JButton("View Saved Notes");
@@ -32,12 +31,13 @@ public class NoteTaker extends JFrame {
     /**
      * Constructor
      */
-    public NoteTaker() {
+    public NoteTaker() 
+    {
         // Add listeners for the buttons
         viewNotes.addActionListener(new ViewNotesListener());
         takeNotes.addActionListener(new TakeNotesListener());
 
-        // Set the layout and add the icon and buttons
+        // Set the layout and add the components
         this.setLayout(new FlowLayout());
         this.add(imagePanel);
         this.add(viewNotes);
@@ -46,10 +46,10 @@ public class NoteTaker extends JFrame {
 
     /**
      * Main method
-     *
      * @param args: Command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         NoteTaker noteTaker = new NoteTaker();
         noteTaker.setTitle("Note Taker");
         noteTaker.setSize(500, 600);
@@ -59,32 +59,39 @@ public class NoteTaker extends JFrame {
     }
 
     /**
-     * Listener for the view notes button. Launches a new window for viewing
-     * saved notes
+     * Listener for the view notes button. Launches a new window for 
+     * viewing enrolled classes/saved notes
      */
-    public class ViewNotesListener implements ActionListener {
-
+    public class ViewNotesListener implements ActionListener
+    {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e)
+        {
             ViewNotes viewNotes = new ViewNotes();
             viewNotes.setTitle("View Notes");
             viewNotes.setSize(700, 700);
             viewNotes.setLocationRelativeTo(null);
-            viewNotes.setDefaultCloseOperation(EXIT_ON_CLOSE);
             viewNotes.setVisible(true);
         }
     }
 
     /**
-     * Listener for the take notes button. Launches notepad
+     * Listener for the take notes button. Launches Notepad for 
+     * the text editor since there isn't enough time to code our
+     * own text editor...
      */
-    public class TakeNotesListener implements ActionListener {
-
+    public class TakeNotesListener implements ActionListener 
+    {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
+        public void actionPerformed(ActionEvent e)
+        {
+            try 
+            {
                 Desktop.getDesktop().open(new File("C:\\Windows\\notepad.exe"));
-            } catch (IOException ex) {
+            } 
+            
+            catch (IOException ex) 
+            {
                 Logger.getLogger(NoteTaker.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

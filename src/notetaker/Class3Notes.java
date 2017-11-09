@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 
-public class Class0Notes extends JFrame
+public class Class3Notes extends JFrame
 {
     public Component getGui(File[] all, boolean vertical) 
     {
