@@ -54,7 +54,7 @@ public class ViewNotes extends JFrame
         class5.addActionListener(new Class5Listener());
         
         // Set the layout and add the components
-        this.setLayout(new GridLayout(3, 3));
+        this.setLayout(new GridLayout(3, 2));
         this.add(class0);
         this.add(class1);
         this.add(class2);

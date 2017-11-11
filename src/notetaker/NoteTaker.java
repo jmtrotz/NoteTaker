@@ -52,7 +52,7 @@ public class NoteTaker extends JFrame
     {
         NoteTaker noteTaker = new NoteTaker();
         noteTaker.setTitle("Note Taker");
-        noteTaker.setSize(500, 600);
+        noteTaker.setSize(450, 590);
         noteTaker.setLocationRelativeTo(null);
         noteTaker.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         noteTaker.setVisible(true);
@@ -69,7 +69,7 @@ public class NoteTaker extends JFrame
         {
             ViewNotes viewNotes = new ViewNotes();
             viewNotes.setTitle("View Notes");
-            viewNotes.setSize(700, 700);
+            viewNotes.setSize(450, 590);
             viewNotes.setLocationRelativeTo(null);
             viewNotes.setVisible(true);
         }
