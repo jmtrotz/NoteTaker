@@ -30,6 +30,7 @@ public class ViewNotes extends JFrame
     private final JButton class3 = new JButton("CT 406", folderIcon);
     private final JButton class4 = new JButton("SE 321", folderIcon);
     private final JButton class5 = new JButton("SE 451", folderIcon);
+   
     
     /**
      * Constructor
@@ -45,12 +46,12 @@ public class ViewNotes extends JFrame
         class5.setHorizontalTextPosition(SwingConstants.CENTER);
         
         // Add listeners to the buttons
-        class0.addActionListener(new Class0Listener());
-        class1.addActionListener(new Class1Listener());
-        class2.addActionListener(new Class2Listener());
-        class3.addActionListener(new Class3Listener());
-        class4.addActionListener(new Class4Listener());
-        class5.addActionListener(new Class5Listener());
+        class0.addActionListener(new ClassListener());
+        class1.addActionListener(new ClassListener());
+        class2.addActionListener(new ClassListener());
+        class3.addActionListener(new ClassListener());
+        class4.addActionListener(new ClassListener());
+        class5.addActionListener(new ClassListener());
         
         // Set the layout and add the components
         this.setLayout(new GridLayout(3, 2));
@@ -65,86 +66,87 @@ public class ViewNotes extends JFrame
     /**
      * Listener class for the class0 button
      */
-    public class Class0Listener implements ActionListener
+    public class ClassListener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+        	JButton sender = (JButton) e.getSource();
             // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS305";
+            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\" +sender.getText();
             chooseFile(filePath);
         }
     }
 
-    /**
-     * Listener class for the class1 button
-     */
-    public class Class1Listener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS405";
-            chooseFile(filePath);
-        }
-    }
-
-    /**
-     * Listener class for the class2 button
-     */
-    public class Class2Listener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT206";
-            chooseFile(filePath);
-        }
-    }
-
-    /**
-     * Listener class for the class3 button
-     */
-    public class Class3Listener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT406";
-            chooseFile(filePath);
-        }
-    }
-
-    /**
-     * Listener class for the class4 button
-     */
-    public class Class4Listener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE321";
-            chooseFile(filePath);
-        }
-    }
-    
-    /**
-     * Listener class for the class5 button
-     */
-    public class Class5Listener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE451";
-            chooseFile(filePath);
-        }
-    }
+//    /**
+//     * Listener class for the class1 button
+//     */
+//    public class Class1Listener implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            // If this button is selected, call chooseFile() and feed it the file path
+//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS405";
+//            chooseFile(filePath);
+//        }
+//    }
+//
+//    /**
+//     * Listener class for the class2 button
+//     */
+//    public class Class2Listener implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            // If this button is selected, call chooseFile() and feed it the file path
+//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT206";
+//            chooseFile(filePath);
+//        }
+//    }
+//
+//    /**
+//     * Listener class for the class3 button
+//     */
+//    public class Class3Listener implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            // If this button is selected, call chooseFile() and feed it the file path
+//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT406";
+//            chooseFile(filePath);
+//        }
+//    }
+//
+//    /**
+//     * Listener class for the class4 button
+//     */
+//    public class Class4Listener implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            // If this button is selected, call chooseFile() and feed it the file path
+//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE321";
+//            chooseFile(filePath);
+//        }
+//    }
+//    
+//    /**
+//     * Listener class for the class5 button
+//     */
+//    public class Class5Listener implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e)
+//        {
+//            // If this button is selected, call chooseFile() and feed it the file path
+//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE451";
+//            chooseFile(filePath);
+//        }
+//    }
     
     /**
      * Method to open the file explorer for viewing saved notes
