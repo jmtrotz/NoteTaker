@@ -23,8 +23,7 @@ import javax.swing.SwingConstants;
 public class ViewNotes extends JFrame 
 {
     // Declare and set properties for attributes used in this class
-    private final String folder = "images/folder.jpg";
-    private final ImageIcon folderIcon = new ImageIcon(folder);
+    private final ImageIcon folderIcon = new ImageIcon("images/folder.jpg");
     private final JButton class0 = new JButton("CS 305", folderIcon);
     private final JButton class1 = new JButton("CS 405", folderIcon);
     private final JButton class2 = new JButton("CT 206", folderIcon);
@@ -37,7 +36,7 @@ public class ViewNotes extends JFrame
      */
     public ViewNotes() 
     {
-        // Set text position for the buttons
+        // Set position for the buttons
         class0.setHorizontalTextPosition(SwingConstants.CENTER);
         class1.setHorizontalTextPosition(SwingConstants.CENTER);
         class2.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -63,80 +62,114 @@ public class ViewNotes extends JFrame
         this.add(class5);
     }
     
+    /**
+     * Listener class for the class0 button
+     */
     public class Class0Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS305";
             chooseFile(filePath);
         }
     }
 
+    /**
+     * Listener class for the class1 button
+     */
     public class Class1Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS405";
             chooseFile(filePath);
         }
     }
 
+    /**
+     * Listener class for the class2 button
+     */
     public class Class2Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT206";
             chooseFile(filePath);
         }
     }
 
+    /**
+     * Listener class for the class3 button
+     */
     public class Class3Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT406";
             chooseFile(filePath);
         }
     }
 
+    /**
+     * Listener class for the class4 button
+     */
     public class Class4Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE321";
             chooseFile(filePath);
         }
     }
     
+    /**
+     * Listener class for the class5 button
+     */
     public class Class5Listener implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // If this button is selected, call chooseFile() and feed it the file path
             String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE451";
             chooseFile(filePath);
         }
     }
     
+    /**
+     * Method to open the file explorer for viewing saved notes
+     * @param filePath - Path to the folder where the file explorer will open
+     */
     private void chooseFile(String filePath)
     {
+        // Create JFileChooser object with path to the folder where it will open
         JFileChooser fileChooser = new JFileChooser(new File(filePath));
+        
+        // Store the option selected by the user (open, cancel, etc)
         int selection = fileChooser.showOpenDialog(null);
 
+        // If the user selects "open", open the file
         if (selection == JFileChooser.APPROVE_OPTION) 
         {
             File fileToOpen = fileChooser.getSelectedFile();
             
+            // Try to open the file
             try 
             {
                 Desktop.getDesktop().open(fileToOpen);
             } 
                 
+            // Catch any IO exceptions
             catch (IOException ex) 
             {
                 Logger.getLogger(ViewNotes.class.getName()).log(Level.SEVERE, null, ex);

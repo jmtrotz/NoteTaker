@@ -22,10 +22,9 @@ import javax.swing.JLabel;
 public class NoteTaker extends JFrame 
 {
     // Declare and set properties for attributes used in this class
-    private final String logo = "images/logo.png";
     private final JButton viewNotes = new JButton("View Saved Notes");
     private final JButton takeNotes = new JButton("Take a New Note");
-    private final ImageIcon image = new ImageIcon(logo);
+    private final ImageIcon image = new ImageIcon("images/logo.png");
     private final JLabel imagePanel = new JLabel(image, JLabel.CENTER);
 
     /**
@@ -50,6 +49,7 @@ public class NoteTaker extends JFrame
      */
     public static void main(String[] args)
     {
+        // Create NoteTaker object, set attributes, and open a new window
         NoteTaker noteTaker = new NoteTaker();
         noteTaker.setTitle("Note Taker");
         noteTaker.setSize(450, 590);
@@ -67,6 +67,7 @@ public class NoteTaker extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // Create ViewNotes object, set attributes, and open a new window
             ViewNotes viewNotes = new ViewNotes();
             viewNotes.setTitle("View Notes");
             viewNotes.setSize(450, 590);
@@ -85,11 +86,13 @@ public class NoteTaker extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            // Try to launch Notepad for taking notes
             try 
             {
                 Desktop.getDesktop().open(new File("C:\\Windows\\notepad.exe"));
             } 
             
+            // Catch any IO exceptions
             catch (IOException ex) 
             {
                 Logger.getLogger(NoteTaker.class.getName()).log(Level.SEVERE, null, ex);
