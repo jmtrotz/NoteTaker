@@ -120,7 +120,7 @@ public class ViewNotes extends JFrame
         {
         	JButton sender = (JButton) e.getSource();
             // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\" +sender.getText();
+            String filePath = path +sender.getText();
             chooseFile(filePath);
         }
     }
@@ -174,14 +174,25 @@ public class ViewNotes extends JFrame
     }
     
     /**
+     * Method to remove a class from the classes list and 
+     * @param className
+     * @return
+     */
+    public boolean removeclass(String className)
+    {
+    	return false;
+    }
+    
+    /**
      * Will allow for a script to run in order to get and return an array of classes
      * @param path the path to be searched as a String
      * @return classes list as a String
      */
     public String getClasses(String path)
     {
-    	String command = "powershell.exe  ls " +path;
+    	String command = "powershell.exe  Get-ChildItem " + path +"| Select-Object Name" ;
     	String out ="";
+    	String line = "";
     	
     	try
     	{
@@ -191,10 +202,11 @@ public class ViewNotes extends JFrame
     	  powerShellProcess.getOutputStream().close();
     	  BufferedReader stdout = new BufferedReader(new InputStreamReader(
     			    powerShellProcess.getInputStream()));
-    	  while ((out = stdout.readLine()) != null) 
+    	  while ((line =stdout.readLine()) != null) 
     	  {
-    		   System.out.println(out);
+    		   System.out.println(line);//out+=line;
     	  }
+    	  System.out.println(out);
     	  return "yay";
     	  
     	}
@@ -221,14 +233,33 @@ public class ViewNotes extends JFrame
      * @author kireh
      *
      */
-    class SettingsFrame extends JDialog
+    class SettingsDialog extends JDialog
     {
     	String path = "C:\\";
     	
-    	public SettingsFrame(ViewNotes parent)
+    	public SettingsDialog(ViewNotes parent)
     	{
     		super(parent, "Settings", true);
     		
     	}
+    }
+    
+    /**
+     * Encapsulates the dialog that allows a user to add a class to the ViewNotes panel
+     * @author kireh
+     *
+     */
+    class addClassDialog extends JDialog
+    {
+    	
+    }
+    
+    /**
+     * Encapsulates the dialog that allows a user to remove a class from the ViewNotes panel
+     * @author kireh
+     */
+    class removeClassDialog extends JDialog
+    {
+    	
     }
 }
