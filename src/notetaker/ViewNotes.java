@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -23,14 +24,9 @@ import javax.swing.SwingConstants;
 public class ViewNotes extends JFrame 
 {
     // Declare and set properties for attributes used in this class
+	private HashSet<String> classes = new HashSet<>();
     private final ImageIcon folderIcon = new ImageIcon("images/folder.jpg");
-    private final JButton class0 = new JButton("CS 305", folderIcon);
-    private final JButton class1 = new JButton("CS 405", folderIcon);
-    private final JButton class2 = new JButton("CT 206", folderIcon);
-    private final JButton class3 = new JButton("CT 406", folderIcon);
-    private final JButton class4 = new JButton("SE 321", folderIcon);
-    private final JButton class5 = new JButton("SE 451", folderIcon);
-    private String path = "notes/"; 
+    private String path = "C:\\notes"; 
    
     
     /**
@@ -38,32 +34,36 @@ public class ViewNotes extends JFrame
      */
     public ViewNotes() 
     {
-        // Set position for the buttons
-        class0.setHorizontalTextPosition(SwingConstants.CENTER);
-        class1.setHorizontalTextPosition(SwingConstants.CENTER);
-        class2.setHorizontalTextPosition(SwingConstants.CENTER);
-        class3.setHorizontalTextPosition(SwingConstants.CENTER);
-        class4.setHorizontalTextPosition(SwingConstants.CENTER);
-        class5.setHorizontalTextPosition(SwingConstants.CENTER);
-        
-        // Add listeners to the buttons
-        class0.addActionListener(new ClassListener());
-        class1.addActionListener(new ClassListener());
-        class2.addActionListener(new ClassListener());
-        class3.addActionListener(new ClassListener());
-        class4.addActionListener(new ClassListener());
-        class5.addActionListener(new ClassListener());
-        
-        // Set the layout and add the components
-        this.setLayout(new GridLayout(3, 2));
-        this.add(class0);
-        this.add(class1);
-        this.add(class2);
-        this.add(class3);
-        this.add(class4);
-        this.add(class5);
+    	classes.add("CS 305");
+    	classes.add("CS 405");
+    	classes.add("CT 206");
+    	classes.add("CT 406");
+    	classes.add("SE 321");
+    	classes.add("SE 451");
+    	classes.add("MA 124");
+    	
+    	this.setLayout(new GridLayout(getRows(), 2));
+    	for (String name : classes)
+    	{
+    		JButton newClassButton = new JButton(name, folderIcon);
+    		newClassButton.setHorizontalTextPosition(SwingConstants.CENTER);
+    		newClassButton.addActionListener(new ClassListener());
+    		this.add(newClassButton);
+    	}
     }
     
+    public int getRows()
+    {
+    	int items = classes.size();
+    	if (items%2==0)
+    	{
+    		return items/2;
+    	}
+    	else
+    	{
+    		return items/2+1;
+    	}
+    }
     /**
      * Attempts to set a new path for the ViewNotes window, changing the directory for the NoteTaker program.
      * @param newPath the new path to be set as a String
@@ -72,11 +72,11 @@ public class ViewNotes extends JFrame
     public boolean setPath(String newPath)
     {
     	boolean success = false;
-    	//attempt to verify the path
+    	
     	try
     	{
     		File testPath = new File(newPath);
-    		if (testPath.isDirectory())
+    		if (testPath.isDirectory()) //Verify that the new Path is a directory since we can't base our tree in a file.
     		{
     			success = true;
     			this.path = newPath;
@@ -84,7 +84,11 @@ public class ViewNotes extends JFrame
     	}
     	catch(NullPointerException npe)
     	{
-    		System.out.print("Line 82: " + npe.getLocalizedMessage());
+    		System.out.println("Line 82: " + npe.getLocalizedMessage());
+    	}
+    	catch(SecurityException se)
+    	{
+    		System.out.println("Line 91: " +se.getLocalizedMessage());
     	}
     	finally
     	{
@@ -93,7 +97,7 @@ public class ViewNotes extends JFrame
     }
     
     /**
-     * Listener class for the class0 button
+     * Listener class for the class buttons
      */
     public class ClassListener implements ActionListener
     {
@@ -219,7 +223,9 @@ public class ViewNotes extends JFrame
     	
     	public SettingsFrame(ViewNotes parent)
     	{
+    		super("Settings");
     		this.path = parent.path;
+    		
     	}
     }
 }
