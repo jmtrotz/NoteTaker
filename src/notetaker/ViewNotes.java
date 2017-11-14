@@ -30,6 +30,7 @@ public class ViewNotes extends JFrame
     private final JButton class3 = new JButton("CT 406", folderIcon);
     private final JButton class4 = new JButton("SE 321", folderIcon);
     private final JButton class5 = new JButton("SE 451", folderIcon);
+    private String path = "notes/"; 
    
     
     /**
@@ -64,6 +65,34 @@ public class ViewNotes extends JFrame
     }
     
     /**
+     * Attempts to set a new path for the ViewNotes window, changing the directory for the NoteTaker program.
+     * @param newPath the new path to be set as a String
+     * @return successful completion as a boolean
+     */
+    public boolean setPath(String newPath)
+    {
+    	boolean success = false;
+    	//attempt to verify the path
+    	try
+    	{
+    		File testPath = new File(newPath);
+    		if (testPath.isDirectory())
+    		{
+    			success = true;
+    			this.path = newPath;
+    		}
+    	}
+    	catch(NullPointerException npe)
+    	{
+    		System.out.print("Line 82: " + npe.getLocalizedMessage());
+    	}
+    	finally
+    	{
+    		return success;
+    	}
+    }
+    
+    /**
      * Listener class for the class0 button
      */
     public class ClassListener implements ActionListener
@@ -78,75 +107,75 @@ public class ViewNotes extends JFrame
         }
     }
 
-//    /**
-//     * Listener class for the class1 button
-//     */
-//    public class Class1Listener implements ActionListener
-//    {
-//        @Override
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            // If this button is selected, call chooseFile() and feed it the file path
-//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS405";
-//            chooseFile(filePath);
-//        }
-//    }
-//
-//    /**
-//     * Listener class for the class2 button
-//     */
-//    public class Class2Listener implements ActionListener
-//    {
-//        @Override
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            // If this button is selected, call chooseFile() and feed it the file path
-//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT206";
-//            chooseFile(filePath);
-//        }
-//    }
-//
-//    /**
-//     * Listener class for the class3 button
-//     */
-//    public class Class3Listener implements ActionListener
-//    {
-//        @Override
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            // If this button is selected, call chooseFile() and feed it the file path
-//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT406";
-//            chooseFile(filePath);
-//        }
-//    }
-//
-//    /**
-//     * Listener class for the class4 button
-//     */
-//    public class Class4Listener implements ActionListener
-//    {
-//        @Override
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            // If this button is selected, call chooseFile() and feed it the file path
-//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE321";
-//            chooseFile(filePath);
-//        }
-//    }
-//    
-//    /**
-//     * Listener class for the class5 button
-//     */
-//    public class Class5Listener implements ActionListener
-//    {
-//        @Override
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            // If this button is selected, call chooseFile() and feed it the file path
-//            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE451";
-//            chooseFile(filePath);
-//        }
-//    }
+/*    
+*     * Listener class for the class1 button
+*     
+*    public class Class1Listener implements ActionListener
+*    {
+*        @Override
+*        public void actionPerformed(ActionEvent e)
+*        {
+*            // If this button is selected, call chooseFile() and feed it the file path
+*            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CS405";
+*            chooseFile(filePath);
+*        }
+*    }
+*
+*    
+*     * Listener class for the class2 button
+*    
+*    public class Class2Listener implements ActionListener
+*    {
+*        @Override
+*        public void actionPerformed(ActionEvent e)
+*        {
+*            // If this button is selected, call chooseFile() and feed it the file path
+*            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT206";
+*            chooseFile(filePath);
+*        }
+*    }
+*
+*    
+*     * Listener class for the class3 button
+*     
+*    public class Class3Listener implements ActionListener
+*    {
+*        @Override
+*        public void actionPerformed(ActionEvent e)
+*        {
+*            // If this button is selected, call chooseFile() and feed it the file path
+*            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\CT406";
+*            chooseFile(filePath);
+*        }
+*    }
+*
+*    
+*     * Listener class for the class4 button
+*     
+*    public class Class4Listener implements ActionListener
+*    {
+*        @Override
+*        public void actionPerformed(ActionEvent e)
+*        {
+*            // If this button is selected, call chooseFile() and feed it the file path
+*            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE321";
+*            chooseFile(filePath);
+*        }
+*    }
+*    
+*    
+*     * Listener class for the class5 button
+*     
+*    public class Class5Listener implements ActionListener
+*    {
+*        @Override
+*        public void actionPerformed(ActionEvent e)
+*        {
+*            // If this button is selected, call chooseFile() and feed it the file path
+*            String filePath = "C:\\Users\\jmtro\\Documents\\SE321\\demo\\SE451";
+*            chooseFile(filePath);
+*        }
+/*    }
     
     /**
      * Method to open the file explorer for viewing saved notes
@@ -177,5 +206,20 @@ public class ViewNotes extends JFrame
                 Logger.getLogger(ViewNotes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    /**
+     * Encompasses the settings panel including all options available to the ViewNotes panel
+     * @author kireh
+     *
+     */
+    class SettingsFrame extends JFrame
+    {
+    	String path = "C:\\";
+    	
+    	public SettingsFrame(ViewNotes parent)
+    	{
+    		this.path = parent.path;
+    	}
     }
 }
