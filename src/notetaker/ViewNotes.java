@@ -41,7 +41,8 @@ public class ViewNotes extends JFrame
     	System.out.println(path);
     	System.out.println(getClasses(path));
     	//System.out.println(addClass("MA355"));
-    	addClass();
+    	//System.out.println(promptRemove());
+    	removeClass();
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
@@ -163,6 +164,15 @@ public class ViewNotes extends JFrame
     }
 
     /**
+     * 
+     * @return
+     */
+    public String promptRemove()
+    {
+    	return (String) JOptionPane.showInputDialog(this, "Select a class to Remove", "Remove class", JOptionPane.WARNING_MESSAGE, new ImageIcon("images\removeIcon.png"), classes.toArray(), null);
+    }
+    
+    /**
      * Adds a class to the list of viewable folders
      * @param newClassName the name of the new class to be added as a String with no spaces
      * @return success as a boolean
@@ -213,14 +223,49 @@ public class ViewNotes extends JFrame
     	}
     }
     
+    
     /**
-     * Method to remove a class from the classes list and 
+   	 * Method to remove a class from the classes list and optionally, the file system
      * @param className
      * @return
      */
-    public boolean removeclass(String className)
+    public String removeClass()
     {
-    	return false;
+    	String className = promptRemove();
+    	String command = "powershell.exe  Remove-Item " + " \"" +path +"\\" +className +"\" -Force -Recurse"; 
+    	String line = "";
+    	System.out.println(command);
+    	try
+    	{
+    	  // Executing the command
+    	  Process powerShellProcess = Runtime.getRuntime().exec(command);
+    	  powerShellProcess.getOutputStream().close();
+    	  BufferedReader stdout = new BufferedReader(new InputStreamReader(
+    			    powerShellProcess.getInputStream()));
+    	  while ((line =stdout.readLine()) != null) 
+    	  {
+    		  System.out.println(line);
+    	  }
+    	  getClasses(path);
+    	  return "line 178: true";
+    	  
+    	}
+    	catch (SecurityException se)
+    	{
+    		return "false1";
+    	}
+    	catch(IOException ioe)
+    	{
+    		return "false2";
+    	}
+    	catch(NullPointerException npe)
+    	{
+    		return "false3";
+    	}
+    	catch(IllegalArgumentException iae)
+    	{
+    		return "false4";
+    	}
     }
     
     /**
@@ -286,19 +331,6 @@ public class ViewNotes extends JFrame
     	public SettingsDialog(ViewNotes parent)
     	{
     		super(parent, "Settings", true);
-    		
-    	}
-    }
-    
-    /**
-     * Encapsulates the dialog that allows a user to add a class to the ViewNotes panel
-     * @author kireh
-     *
-     */
-    class addClassPane extends JOptionPane
-    {
-    	public addClassPane(JFrame owner)
-    	{
     		
     	}
     }
