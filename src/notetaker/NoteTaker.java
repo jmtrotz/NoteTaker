@@ -89,7 +89,7 @@ public class NoteTaker extends JFrame
             // Try to launch Notepad for taking notes
             try 
             {
-                Desktop.getDesktop().open(new File("C:\\Windows\\notepad.exe"));
+                Desktop.getDesktop().open(new File(System.getenv("SystemRoot") + "\\notepad.exe"));
             } 
             
             // Catch any IO exceptions
