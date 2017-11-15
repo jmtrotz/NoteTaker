@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -40,6 +41,7 @@ public class ViewNotes extends JFrame
     	System.out.println(path);
     	System.out.println(getClasses(path));
     	//System.out.println(addClass("MA355"));
+    	System.out.println(promptAdd());
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
@@ -150,7 +152,12 @@ public class ViewNotes extends JFrame
             }
         }
     }
-    
+
+    public String promptAdd()
+    {
+    	return JOptionPane.showInputDialog(this, "Enter the name of the class to add:", "Add a class", JOptionPane.QUESTION_MESSAGE);
+    }
+
     /**
      * Adds a class to the list of viewable folders
      * @param newClassName the name of the new class to be added as a String with no spaces
@@ -236,7 +243,7 @@ public class ViewNotes extends JFrame
     		  ans.add(line);
     		  classes = ans;
     	  }
-    	  return "ViewNotes updated classes successfully";
+    	  return "ViewNotes u pdated classes successfully";
     	  
     	}
     	catch (SecurityException se)
@@ -278,9 +285,12 @@ public class ViewNotes extends JFrame
      * @author kireh
      *
      */
-    class addClassDialog extends JDialog
+    class addClassPane extends JOptionPane
     {
-    	
+    	public addClassPane(JFrame owner)
+    	{
+    		
+    	}
     }
     
     /**
