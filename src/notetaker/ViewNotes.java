@@ -33,19 +33,12 @@ public class ViewNotes extends JFrame
    
     
     /**
-     * Constructor
+     * Constructs a new ViewNotes frame, 
      */
     public ViewNotes() 
     {
-    	//System.out.println(path);
+    	System.out.println(path);
     	System.out.println(getClasses(path));
-    	classes.add("CS 305");
-    	classes.add("CS 405");
-    	classes.add("CT 206");
-    	classes.add("CT 406");
-    	classes.add("SE 321");
-    	classes.add("SE 451");
-    	classes.add("MA 124");
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
@@ -135,7 +128,7 @@ public class ViewNotes extends JFrame
         JFileChooser fileChooser = new JFileChooser(new File(filePath));
         
         // Store the option selected by the user (open, cancel, etc)
-        int selection = fileChooser.showOpenDialog(null);
+        int selection = fileChooser.showOpenDialog(this);
 
         // If the user selects "open", open the file
         if (selection == JFileChooser.APPROVE_OPTION) 
