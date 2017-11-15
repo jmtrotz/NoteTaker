@@ -37,7 +37,7 @@ public class ViewNotes extends JFrame
      */
     public ViewNotes() 
     {
-    	System.out.println(path);
+    	//System.out.println(path);
     	System.out.println(getClasses(path));
     	classes.add("CS 305");
     	classes.add("CS 405");
@@ -93,7 +93,7 @@ public class ViewNotes extends JFrame
     		}
     		else if (!testPath.exists())
     		{
-    			
+    			//this block occurs if the path needs to be created
     		}
     	}
     	catch(NullPointerException npe)
@@ -190,10 +190,9 @@ public class ViewNotes extends JFrame
      */
     public String getClasses(String path)
     {
-    	String command = "powershell.exe  Get-ChildItem " + path +"| Select-Object Name" ;
-    	String out ="";
+    	String command = "powershell.exe  Get-ChildItem " + path +" -Directory | Select-Object Name | ft -hide" ;
     	String line = "";
-    	
+    	HashSet<String> ans = new HashSet<>();
     	try
     	{
     	  // Executing the command
@@ -202,11 +201,13 @@ public class ViewNotes extends JFrame
     	  powerShellProcess.getOutputStream().close();
     	  BufferedReader stdout = new BufferedReader(new InputStreamReader(
     			    powerShellProcess.getInputStream()));
-    	  while ((line =stdout.readLine()) != null) 
+    	  while (((line =stdout.readLine()) != null)) 
     	  {
-    		   System.out.println(line);//out+=line;
+    		  if (!line.isEmpty())
+    		   System.out.println(line);
+    		  ans.add(line);
+    		  classes = ans;
     	  }
-    	  System.out.println(out);
     	  return "yay";
     	  
     	}
