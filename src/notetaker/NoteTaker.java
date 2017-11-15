@@ -26,6 +26,7 @@ public class NoteTaker extends JFrame
     private final JButton takeNotes = new JButton("Take a New Note");
     private final ImageIcon image = new ImageIcon("images/logo.png");
     private final JLabel imagePanel = new JLabel(image, JLabel.CENTER);
+    NoteTaker parent = this;
 
     /**
      * Constructor
@@ -67,11 +68,12 @@ public class NoteTaker extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            // Create ViewNotes object, set attributes, and open a new window
+        	// Create ViewNotes object, set attributes, and open a new window
             ViewNotes viewNotes = new ViewNotes();
             viewNotes.setTitle("View Notes");
             viewNotes.setSize(450, 590);
-            viewNotes.setLocationRelativeTo(null);
+            viewNotes.setLocationRelativeTo(parent);
+            viewNotes.setLocation(50, 50);
             viewNotes.setVisible(true);
         }
     }

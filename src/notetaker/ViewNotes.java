@@ -29,16 +29,17 @@ public class ViewNotes extends JFrame
     // Declare and set properties for attributes used in this class
 	private HashSet<String> classes = new HashSet<>();
     private final ImageIcon folderIcon = new ImageIcon("images/folder.jpg");
-    private String path = System.getProperty("user.dir") + "\\notes\\"; 
+    private String path = System.getProperty("user.dir") + "\\notes"; 
    
     
     /**
-     * Constructs a new ViewNotes frame, 
+     * Constructs a new ViewNotes frame, populates it with appropriate classes, presents the frame
      */
     public ViewNotes() 
     {
     	System.out.println(path);
     	System.out.println(getClasses(path));
+    	//System.out.println(addClass("MA355"));
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
@@ -113,7 +114,7 @@ public class ViewNotes extends JFrame
         {
         	JButton sender = (JButton) e.getSource();
             // If this button is selected, call chooseFile() and feed it the file path
-            String openFilePath = path +sender.getText();
+            String openFilePath = path +"\\" +sender.getText();
             System.out.println(openFilePath);
             chooseFile(openFilePath);
         }
@@ -152,18 +153,51 @@ public class ViewNotes extends JFrame
     
     /**
      * Adds a class to the list of viewable folders
-     * @param newClassName the name of the new class to be added
+     * @param newClassName the name of the new class to be added as a String with no spaces
      * @return success as a boolean
      */
-    public boolean addClass(String newClassName)
+    private String addClass(String newClassName)
     {
     	if (classes.add(newClassName))
     	{
-    		return true;
+    		String command = "powershell.exe  New-Item -Path" + " \"" +path +"\\" +newClassName +"\"" +" -ItemType \"directory\""; //this command does not work with spaces
+        	String line = "";
+        	System.out.println(command);
+        	try
+        	{
+        	  // Executing the command
+        	  Process powerShellProcess = Runtime.getRuntime().exec(command);
+        	  powerShellProcess.getOutputStream().close();
+        	  BufferedReader stdout = new BufferedReader(new InputStreamReader(
+        			    powerShellProcess.getInputStream()));
+        	  while ((line =stdout.readLine()) != null) 
+        	  {
+        		  System.out.println(line);
+        	  }
+        	  getClasses(path);
+        	  return "line 178: true";
+        	  
+        	}
+        	catch (SecurityException se)
+        	{
+        		return "false1";
+        	}
+        	catch(IOException ioe)
+        	{
+        		return "false2";
+        	}
+        	catch(NullPointerException npe)
+        	{
+        		return "false3";
+        	}
+        	catch(IllegalArgumentException iae)
+        	{
+        		return "false4";
+        	}
     	}
     	else
     	{
-    		return false;
+    		return "false5";
     	}
     }
     
@@ -202,7 +236,7 @@ public class ViewNotes extends JFrame
     		  ans.add(line);
     		  classes = ans;
     	  }
-    	  return "yay";
+    	  return "ViewNotes updated classes successfully";
     	  
     	}
     	catch (SecurityException se)
