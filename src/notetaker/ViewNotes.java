@@ -29,7 +29,7 @@ public class ViewNotes extends JFrame
     // Declare and set properties for attributes used in this class
 	private HashSet<String> classes = new HashSet<>();
     private final ImageIcon folderIcon = new ImageIcon("images/folder.jpg");
-    private String path = System.getProperty("user.dir") + "\\notes"; 
+    private String path = System.getProperty("user.dir") + "\\notes\\"; 
    
     
     /**
@@ -113,8 +113,9 @@ public class ViewNotes extends JFrame
         {
         	JButton sender = (JButton) e.getSource();
             // If this button is selected, call chooseFile() and feed it the file path
-            String filePath = path +sender.getText();
-            chooseFile(filePath);
+            String openFilePath = path +sender.getText();
+            System.out.println(openFilePath);
+            chooseFile(openFilePath);
         }
     }
     
