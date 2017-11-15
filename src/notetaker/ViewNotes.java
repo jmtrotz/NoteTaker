@@ -41,7 +41,7 @@ public class ViewNotes extends JFrame
     	System.out.println(path);
     	System.out.println(getClasses(path));
     	//System.out.println(addClass("MA355"));
-    	System.out.println(promptAdd());
+    	addClass();
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
@@ -163,8 +163,9 @@ public class ViewNotes extends JFrame
      * @param newClassName the name of the new class to be added as a String with no spaces
      * @return success as a boolean
      */
-    private String addClass(String newClassName)
+    private String addClass()
     {
+    	String newClassName = promptAdd();
     	if (classes.add(newClassName))
     	{
     		String command = "powershell.exe  New-Item -Path" + " \"" +path +"\\" +newClassName +"\"" +" -ItemType \"directory\""; //this command does not work with spaces
