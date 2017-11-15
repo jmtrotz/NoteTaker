@@ -153,6 +153,10 @@ public class ViewNotes extends JFrame
         }
     }
 
+    /**
+     * Prompts the user to enter the class name to be added
+     * @return The name of the new class as a String
+     */
     public String promptAdd()
     {
     	return JOptionPane.showInputDialog(this, "Enter the name of the class to add:", "Add a class", JOptionPane.QUESTION_MESSAGE);
@@ -166,7 +170,7 @@ public class ViewNotes extends JFrame
     private String addClass()
     {
     	String newClassName = promptAdd();
-    	if (classes.add(newClassName))
+    	if (this.isClean(newClassName) && classes.add(newClassName))
     	{
     		String command = "powershell.exe  New-Item -Path" + " \"" +path +"\\" +newClassName +"\"" +" -ItemType \"directory\""; //this command does not work with spaces
         	String line = "";
@@ -244,7 +248,7 @@ public class ViewNotes extends JFrame
     		  ans.add(line);
     		  classes = ans;
     	  }
-    	  return "ViewNotes u pdated classes successfully";
+    	  return "ViewNotes updated classes successfully";
     	  
     	}
     	catch (SecurityException se)
@@ -263,6 +267,11 @@ public class ViewNotes extends JFrame
     	{
     		return "illegal argument in getClasses";
     	}
+    }
+    
+    private boolean isClean(String s)
+    {
+    	return (s!=null && !s.equals("") && !s.equals("null"));
     }
     
     /**
