@@ -51,12 +51,16 @@ public class NoteTaker extends JFrame
     public static void main(String[] args)
     {
         // Create NoteTaker object, set attributes, and open a new window
-        NoteTaker noteTaker = new NoteTaker();
-        noteTaker.setTitle("Note Taker");
-        noteTaker.setSize(450, 590);
-        noteTaker.setLocationRelativeTo(null);
-        noteTaker.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        noteTaker.setVisible(true);
+        //NoteTaker noteTaker = new NoteTaker();
+        //noteTaker.setTitle("Note Taker");
+        //noteTaker.setSize(450, 590);
+       // noteTaker.setLocationRelativeTo(null);
+       // noteTaker.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //noteTaker.setVisible(true);
+        
+        NotesView x = new NotesView();
+        x.setVisible(true);
+        
     }
 
     /**

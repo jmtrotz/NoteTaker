@@ -42,7 +42,7 @@ public class ViewNotes extends JFrame
     	System.out.println(getClasses(path));
     	//System.out.println(addClass("MA355"));
     	//System.out.println(promptRemove());
-    	removeClass();
+    	//removeClass();
     	
     	this.setLayout(new GridLayout(getRows(), 2));
     	for (String name : classes)
