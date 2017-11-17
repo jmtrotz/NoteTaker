@@ -10,6 +10,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public class NotesView extends JFrame
 		this.setLayout(new BorderLayout());
 		getClasses(path);
 		listView = new ClassListPanel();
-		listView.setSize(330, 590);
+		listView.setSize(500, 590);
 		fileView = new NotesListPanel();
 		this.add(listView, BorderLayout.WEST);
 		this.add(fileView, BorderLayout.CENTER);
@@ -93,11 +94,14 @@ public class NotesView extends JFrame
     public String[] classArr()
     {
     	int arrSize = classes.size();
-    	Object[] temp = classes.toArray();
-    	String[] ans = new String[arrSize];
-    	for (int i = 0; i<classes.size(); i++)
+    	ArrayList<String> sorted = new ArrayList<>(classes);
+    	sorted.sort(null);
+    	Object[] temp = sorted.toArray();
+    	String[] ans = new String[arrSize+1];
+    	ans[0] = "                                ";
+    	for (int i = 1; i<ans.length; i++)
     	{
-    		ans[i] = (String)temp[i];
+    		ans[i] = (String)temp[i-1];
     	}
     	return ans;
     }
@@ -119,16 +123,18 @@ public class NotesView extends JFrame
 		public ClassListPanel()
 		{
 			super();
-			String[] l=classArr(); 
+			String[] l=classArr();
+			this.setLayout(new GridLayout(1,1));
+			this.setSize(500, 590);
 			JList<String> classList = new JList<>(l);
 			classList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			classList.setLayoutOrientation(JList.VERTICAL);
 			classList.setVisibleRowCount(10);
 			classList.addListSelectionListener(new ClassListener());
-			classList.setSize(330, 590);
+			classList.setSize(500, 590);
 			JScrollPane scroll = new JScrollPane(classList);
-			scroll.setSize(new Dimension(330, 590));
-			scroll.setMinimumSize(new Dimension (330, 590));
+			scroll.setSize(new Dimension(500, 590));
+			scroll.setMinimumSize(new Dimension(500,590));
 			this.add(scroll);
 			classList.setVisible(true);
 			scroll.setVisible(true);
@@ -142,8 +148,9 @@ public class NotesView extends JFrame
 			{
 				JList list = (JList)(e.getSource());
 				int i = list.getSelectedIndex();
-				if (i>=0)
+				if (i>0)
 				{
+					System.out.println(list.getSelectedValue());
 					getNotes((String)list.getSelectedValue());
 				}
 			}
