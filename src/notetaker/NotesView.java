@@ -21,6 +21,7 @@ public class NotesView extends JFrame
 {
 	// Declare and set properties for attributes used in this class
 	private HashSet<String> classes = new HashSet<>();
+	private String[] noteFiles = new String[1];
 	private final ImageIcon folderIcon = new ImageIcon("images/folder.jpg");
 	private String path = System.getProperty("user.dir") + "\\notes";
 	
@@ -34,11 +35,11 @@ public class NotesView extends JFrame
 		this.setLayout(new BorderLayout());
 		getClasses(path);
 		listView = new ClassListPanel();
-		listView.setSize(500, 590);
+		listView.setSize(450, 590);
 		fileView = new NotesListPanel();
 		this.add(listView, BorderLayout.WEST);
 		this.add(fileView, BorderLayout.CENTER);
-		this.setSize(990, 590);
+		this.setSize(1000, 590);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		listView.setVisible(true);
@@ -108,13 +109,69 @@ public class NotesView extends JFrame
     
     public String getNotes(String className)
     {
-    	return "";
+    	String command = "powershell.exe  Get-ChildItem " +"\"" +path +"\\" +className.trim() +"\" -File | Select-Object Name | ft -hide\"" ;
+    	System.out.println(command);
+    	String line = "";
+    	HashSet<String> ans = new HashSet<>();
+    	try
+    	{
+    	  // Executing the command
+    	  Process powerShellProcess = Runtime.getRuntime().exec(command);
+    	  // Getting the results
+    	  powerShellProcess.getOutputStream().close();
+    	  BufferedReader stdout = new BufferedReader(new InputStreamReader(
+    			    powerShellProcess.getInputStream()));
+    	  while (((line =stdout.readLine()) != null)) 
+    	  {
+    		  if (!line.isEmpty())
+    		   System.out.println(line);
+    		  ans.add(line);
+    		  
+    	  }
+    	  ArrayList<String> sortedAns = new ArrayList<>(ans);
+    	  noteFiles = sortedAns.toArray(noteFiles);
+    	  for (String n : noteFiles)
+    	  {
+    		  System.out.println(n);
+    	  }
+    	  return "";
+    	  
+    	}
+    	catch (SecurityException se)
+    	{
+    		return("getClasses isn't allowed to run powershell");
+    	}
+    	catch(IOException ioe)
+    	{
+    		return("getClasses has caught an IOException");
+    	}
+    	catch(NullPointerException npe)
+    	{
+    		return("null pointer in getClasses method");
+    	}
+    	catch(IllegalArgumentException iae)
+    	{
+    		return "illegal argument in getClasses";
+    	}
+    	
     }
 	
 	
-	class UtilityBar extends JToolBar
+	class UtilityMenuBar extends JMenuBar
 	{
+		public UtilityMenuBar()
+		{
+			super();
+			
+		}
 		
+		private JMenu MakeFileMenu()
+		{
+			JMenu ans = new JMenu("File");
+			JMenuItem addClass = new JMenuItem("Add Class...");
+			
+			return null;
+		}
 	}
 	
 	class ClassListPanel extends JPanel
@@ -125,16 +182,16 @@ public class NotesView extends JFrame
 			super();
 			String[] l=classArr();
 			this.setLayout(new GridLayout(1,1));
-			this.setSize(500, 590);
+			this.setSize(450, 590);
 			JList<String> classList = new JList<>(l);
 			classList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			classList.setLayoutOrientation(JList.VERTICAL);
 			classList.setVisibleRowCount(10);
 			classList.addListSelectionListener(new ClassListener());
-			classList.setSize(500, 590);
+			classList.setSize(450, 590);
 			JScrollPane scroll = new JScrollPane(classList);
-			scroll.setSize(new Dimension(500, 590));
-			scroll.setMinimumSize(new Dimension(500,590));
+			scroll.setSize(new Dimension(450, 590));
+			scroll.setMinimumSize(new Dimension(450,590));
 			this.add(scroll);
 			classList.setVisible(true);
 			scroll.setVisible(true);
@@ -160,6 +217,12 @@ public class NotesView extends JFrame
 	
 	class NotesListPanel extends JPanel
 	{
-		
+		public NotesListPanel()
+		{
+			super();
+			this.setLayout(new GridLayout(1,1));//will have a scrollPane in a single gridLayout. scroll pane shows files
+			this.setSize(550, 590);
+			
+		}
 	}
 }
