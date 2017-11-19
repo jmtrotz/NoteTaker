@@ -6,11 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileSystemView;
@@ -18,66 +20,60 @@ import javax.swing.filechooser.FileSystemView;
 /**
  * Settings panel for the application
  * @author Jeffrey Trotz
- * @version 1.0.1
+ * @version 1.1.2
  */
 public class Settings extends JFrame
 {    
-    // These text ares are global so methods like .getTtext() 
-    // can be called on them from the listener classes
-    private final JTextField class1Name = new JTextField(20);
-    private final JTextField class2Name = new JTextField(20);
-    private final JTextField class3Name = new JTextField(20);
-    private final JTextField class4Name = new JTextField(20);
-    private final JTextField class5Name = new JTextField(20);
-    private final JTextField class6Name = new JTextField(20);    
-    private final JTextField class1PathChooser = new JTextField(20);
-    private final JTextField class2PathChooser = new JTextField(20);
-    private final JTextField class3PathChooser = new JTextField(20);
-    private final JTextField class4PathChooser = new JTextField(20);
-    private final JTextField class5PathChooser = new JTextField(20);
-    private final JTextField class6PathChooser = new JTextField(20); 
+    private HashMap<String, String> oldSettings = new HashMap<>();
+    private final ArrayList<JTextField> classNameList = new ArrayList<>();
+    private final ArrayList<JTextField> classPathList = new ArrayList<>();
     
     /**
      * Constructor
      */
     public Settings()
     {
-        class1Name.setBorder(new TitledBorder("Name for class 1:"));
-        class2Name.setBorder(new TitledBorder("Name for class 2:"));
-        class3Name.setBorder(new TitledBorder("Name for class 3:"));
-        class4Name.setBorder(new TitledBorder("Name for class 4:"));
-        class5Name.setBorder(new TitledBorder("Name for class 5:"));
-        class6Name.setBorder(new TitledBorder("Name for class 6:"));        
-        class1PathChooser.setBorder(new TitledBorder("Choose folder location for class 1:"));
-        class2PathChooser.setBorder(new TitledBorder("Choose folder location for class 2:"));
-        class3PathChooser.setBorder(new TitledBorder("Choose folder location for class 3:"));
-        class4PathChooser.setBorder(new TitledBorder("Choose folder location for class 4:"));
-        class5PathChooser.setBorder(new TitledBorder("Choose folder location for class 5:"));
-        class6PathChooser.setBorder(new TitledBorder("Choose folder location for class 6:"));        
-        class1PathChooser.addMouseListener(new PathButtonListener());
-        class2PathChooser.addMouseListener(new PathButtonListener());
-        class3PathChooser.addMouseListener(new PathButtonListener());
-        class4PathChooser.addMouseListener(new PathButtonListener());
-        class5PathChooser.addMouseListener(new PathButtonListener());
-        class6PathChooser.addMouseListener(new PathButtonListener());
-        
+        oldSettings = this.getSettings();
         JButton save = new JButton("Save");
-        save.addActionListener(new SaveButtonListener());
+        save.addActionListener(new SaveButtonListener());        
+        this.setLayout(new FlowLayout());        
+        Iterator iterator = oldSettings.keySet().iterator();
+        int index = 1;
         
-        this.setLayout(new FlowLayout());
-        this.add(class1Name);
-        this.add(class2Name);
-        this.add(class3Name);
-        this.add(class4Name);
-        this.add(class5Name);
-        this.add(class6Name);
-        this.add(class1PathChooser);
-        this.add(class2PathChooser);
-        this.add(class3PathChooser);
-        this.add(class4PathChooser);
-        this.add(class5PathChooser);
-        this.add(class6PathChooser);
+        while(iterator.hasNext()) 
+        {
+            String classNameText = iterator.next().toString();
+            String classPathText = oldSettings.get(classNameText);
+            
+            JTextField className = new JTextField(20);
+            className.setBorder(new TitledBorder("Name for class " + index + ":"));          
+            className.setText(classNameText);
+            classNameList.add(className);
+            
+            JTextField classPath = new JTextField(20);
+            classPath.setBorder(new TitledBorder("Choose folder location for class " + index + ":"));
+            classPath.addMouseListener(new PathButtonListener());
+            classPath.setText(classPathText);
+            classPathList.add(classPath);
+            
+            this.add(className);
+            this.add(classPath);
+            index ++;
+        }
+        
         this.add(save);
+    }
+    
+    /**
+     * Method to get class names and file paths from the database
+     * @return - Returns a hash map containing these settings
+     */
+    public HashMap getSettings()
+    {
+        DatabaseMethods database = new DatabaseMethods();
+        oldSettings = database.getSettings();
+        
+        return oldSettings;
     }
     
     /**
@@ -96,34 +92,34 @@ public class Settings extends JFrame
 
             if (selection == JFileChooser.APPROVE_OPTION) 
             {
-                if (mouseEvent.getSource() == class1PathChooser)
+                if (mouseEvent.getSource() == classPathList.get(0))
                 {
-                    class1PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(0).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 
-                else if (mouseEvent.getSource() == class2PathChooser)
+                else if (mouseEvent.getSource() == classPathList.get(1))
                 {
-                    class2PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(1).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 
-                else if (mouseEvent.getSource() == class3PathChooser)
+                else if (mouseEvent.getSource() == classPathList.get(2))
                 {
-                    class3PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(2).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 
-                else if (mouseEvent.getSource() == class4PathChooser)
+                else if (mouseEvent.getSource() == classPathList.get(3))
                 {
-                    class4PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(3).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 
-                else if (mouseEvent.getSource() == class5PathChooser)
+                else if (mouseEvent.getSource() == classPathList.get(4))
                 {
-                    class5PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(4).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 
-                else if (mouseEvent.getSource() == class6PathChooser)
+                else if (mouseEvent.getSource() == classPathList.get(5))
                 {
-                    class6PathChooser.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                    classPathList.get(5).setText(fileChooser.getSelectedFile().getAbsolutePath());
                 }
             }
         }
@@ -137,26 +133,28 @@ public class Settings extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent actionEvent) 
-        {            
-            HashMap<String, String> settings = new HashMap<>();
-            
-            settings.put(class1Name.getText(), class1PathChooser.getText());
-            settings.put(class2Name.getText(), class2PathChooser.getText());
-            settings.put(class3Name.getText(), class3PathChooser.getText());
-            settings.put(class4Name.getText(), class4PathChooser.getText());
-            settings.put(class5Name.getText(), class5PathChooser.getText());
-            settings.put(class6Name.getText(), class6PathChooser.getText());
+        {
+            HashMap<String, String> newSettings = new HashMap<>();
+            newSettings.put(classNameList.get(0).getText(), classPathList.get(0).getText());
+            newSettings.put(classNameList.get(1).getText(), classPathList.get(1).getText());
+            newSettings.put(classNameList.get(2).getText(), classPathList.get(2).getText());
+            newSettings.put(classNameList.get(3).getText(), classPathList.get(3).getText());
+            newSettings.put(classNameList.get(4).getText(), classPathList.get(4).getText());
+            newSettings.put(classNameList.get(5).getText(), classPathList.get(5).getText());           
             
             DatabaseMethods database = new DatabaseMethods();            
-            Iterator iterator = settings.keySet().iterator();
+            Iterator iterator = newSettings.keySet().iterator();
             
             while(iterator.hasNext()) 
             {
                 String className = iterator.next().toString();
-                String classPath = settings.get(className);
+                String classPath = newSettings.get(className);
                 
                 database.setSettings(className, classPath);
             }
+            
+            JFrame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Settings Saved!");
         }
     }
 }

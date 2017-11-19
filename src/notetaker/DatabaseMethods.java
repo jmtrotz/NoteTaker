@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * Class to store database methods that can be called by other classes
  * @author Jeffrey Trotz
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class DatabaseMethods 
 {    
