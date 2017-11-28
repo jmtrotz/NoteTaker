@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 
 /**
  * Main welcome window for the application
- * @author Jeffrey Trotz
+ * @author Jeffrey Trotz @ Kireh Wright
  * @version 1.0.1
  */
 public class NoteTaker extends JFrame 

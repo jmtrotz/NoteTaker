@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileSystemView;
 
 /**
  * Settings panel for the application
- * @author Jeffrey Trotz
+ * @author Jeffrey Trotz @ Kireh Wright
  * @version 1.1.2
  */
 public class Settings extends JFrame

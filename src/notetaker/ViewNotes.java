@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 
 /**
  * Window for viewing enrolled classes and notes for these classes
- * @author Jeffrey Trotz
+ * @author Jeffrey Trotz @ Kireh Wright
  * @version 1.0.1
  */
 public final class ViewNotes extends JFrame 
